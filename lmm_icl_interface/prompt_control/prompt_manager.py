@@ -39,6 +39,9 @@ class LMMPromptManager:
             prompt = prompt + self.sep_token
         return prompt
 
+    def get_only_ice_label(self, item, label=None):
+        return subtract_strings(self.gen_ice_text_with_label(item, label, add_sep_token=True), self.gen_query_text_without_label(item))
+    
     def gen_query_text_with_label(self, item, label=None, add_sep_token=True):
         if label is None and isinstance(self.query_pt.template, dict):
             label = item[self.label_field]
@@ -46,6 +49,14 @@ class LMMPromptManager:
         if add_sep_token:
             prompt = prompt + self.sep_token
         return prompt
-
+    
     def gen_query_text_without_label(self, item):
         return self.query_pt.generate_item(item, output_field=self.label_field)
+
+def subtract_strings(ori_str, sub_str):
+    if sub_str not in ori_str:
+        return ori_str
+    else:
+        new_str = ori_str.replace(sub_str, "")
+        new_str = new_str.strip()
+        return new_str
