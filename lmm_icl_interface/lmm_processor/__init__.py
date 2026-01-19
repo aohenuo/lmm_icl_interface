@@ -2,3 +2,4 @@ from .base_processor import LMMPromptProcessor
 from .idefics2_processor import Idefics2PromptProcessor
 from .idefics_processor import IdeficsPromptProcessor
 from .open_flamingo_processor import OpenFlamingoPromptProcessor
+from .llava_next_processor import LlavaNextPromptProcessor
